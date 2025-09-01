@@ -15,7 +15,7 @@ function readRows(sheetName) {
   const result = [];
   for (let i = 0; i < dataRows.length; i++) {
     const row = dataRows[i];
-    const obj = {};
+    const obj = { _row_index: i };
     for (let j = 0; j < headers.length; j++) {
       obj[headers[j]] = row[j];
     }
@@ -85,7 +85,9 @@ function insertRowAt(sheetName, index, obj) {
     return false;
   }
   const rowToInsert = index + 2;
-  const newRow = headers.map(header => obj[header] !== undefined ? obj[header] : '');
+  const newRow = headers.map((header) =>
+    obj[header] !== undefined ? obj[header] : ""
+  );
   sheet.insertRowBefore(rowToInsert);
   sheet.getRange(rowToInsert, 1, 1, newRow.length).setValues([newRow]);
   return true;
